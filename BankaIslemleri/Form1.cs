@@ -35,7 +35,7 @@ namespace BankaIslemleri
             if (int.TryParse(txtDebit.Text, out result))
             {
                 BaseEntity notifications = new BaseEntity();
-                int totalAmount = BankAccountService.Debit (UserId, BankAccountNumber, result, Amount, notifications);
+                int totalAmount = BankAccountService.Debit(UserId, BankAccountNumber, result, Amount, notifications);
                 if (notifications.IsSuccess)
                 {
                     Amount = totalAmount;
@@ -59,6 +59,17 @@ namespace BankaIslemleri
             Amount = Amount;
             lblAmount.Text = Amount + " TL";
             lblAccountInfo.Text = UserFullName + " - " + BankAccountNumber;
+
+            if (string.IsNullOrEmpty(UserId))
+            {
+                btnDebit.Enabled = false;
+                btnWithDraw.Enabled = false;
+            }
+            else
+            {
+                btnDebit.Enabled = true;
+                btnWithDraw.Enabled = true;
+            }
         }
 
         private void btnWithDraw_Click(object sender, EventArgs e)
